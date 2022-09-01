@@ -11,3 +11,8 @@ Health Check
 ---
 
 To see your applications health enter url `http://localhost:8081/healthcheck`
+
+Documentation
+---
+
+To see your API swagger enter url `http://localhost:8080/swagger`

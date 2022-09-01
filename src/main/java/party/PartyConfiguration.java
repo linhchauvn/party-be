@@ -1,14 +1,16 @@
 package party;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import in.vectorpro.dropwizard.swagger.SwaggerBundleConfiguration;
 import io.dropwizard.Configuration;
-import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
 import party.config.ClientConfig;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 public class PartyConfiguration extends Configuration {
+    @JsonProperty("swagger")
+    public SwaggerBundleConfiguration swaggerBundleConfiguration;
     @Valid
     @NotNull
     private ClientConfig clientConfig = new ClientConfig();
@@ -23,6 +25,4 @@ public class PartyConfiguration extends Configuration {
         this.clientConfig = factory;
     }
 
-    @JsonProperty("swagger")
-    public SwaggerBundleConfiguration swaggerBundleConfiguration;
 }

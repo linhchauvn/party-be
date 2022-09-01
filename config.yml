@@ -2,4 +2,4 @@ client:
   host: "https://api.chucknorris.io/jokes/search"
 
 swagger:
-  resourcePackage: "resources"
+  resourcePackage: party.resources

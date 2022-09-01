@@ -1,10 +1,13 @@
 package party.resources;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.servers.Server;
 import party.api.JokeService;
 import party.model.JokeResponse;
 
@@ -18,7 +21,18 @@ import javax.ws.rs.core.Response;
 
 @Path("/joke")
 @Produces(MediaType.APPLICATION_JSON)
-@Api(value = "/joke", produces = "application/json")
+@OpenAPIDefinition(
+        info = @Info(
+                title = "Joke API",
+                version = "1.0",
+                description = "Joke API"
+        ),
+        servers = {
+                @Server(
+                        description = "local",
+                        url = "http://localhost:8080")
+        }
+)
 public class JokeResource {
 
     private JokeService jokeService;
@@ -28,14 +42,13 @@ public class JokeResource {
     }
 
     @GET
-    @ApiOperation(value = "Finds jokes by keyword",
-            notes = "Multiple status values can be provided with comma seperated strings",
-            response = JokeResponse.class)
-    @ApiParam(name = "keyword", required = true)
-    @ApiResponses(value = { @ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 429, message = "TOO MANY REQUEST") })
-    public Response getJoke(@QueryParam("keyword")
-                                @NotEmpty String keyword) {
+    @Operation(summary = "Get jokes by keyword", tags = {"jokes"},
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "List of jokes", content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = JokeResponse.class))),
+                    @ApiResponse(responseCode = "429", description = "Keyword requested too much")})
+    public Response getJoke(@Parameter(description = "keyword to find jokes", required = true, schema = @Schema(type = "string"))
+                            @QueryParam("keyword") @NotEmpty String keyword) {
         JokeResponse response = jokeService.getJoke(keyword);
         return Response.status(response.getHttpStatus())
                 .entity(response)

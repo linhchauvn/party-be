@@ -1,13 +1,13 @@
 package party;
 
+import in.vectorpro.dropwizard.swagger.SwaggerBundle;
+import in.vectorpro.dropwizard.swagger.SwaggerBundleConfiguration;
 import io.dropwizard.Application;
 import io.dropwizard.client.JerseyClientBuilder;
 import io.dropwizard.client.JerseyClientConfiguration;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.dropwizard.util.Duration;
-import io.federecio.dropwizard.swagger.SwaggerBundle;
-import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
 import party.client.ChuckNorrisClient;
 import party.resources.HealthCheckResource;
 import party.resources.JokeResource;
